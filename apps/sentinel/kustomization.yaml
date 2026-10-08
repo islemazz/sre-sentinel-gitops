@@ -3,7 +3,9 @@ kind: Kustomization
 resources:
   - sentinel.yaml
   - podmonitor.yaml
+  - prometheusrule.yaml
 images:
   - name: ghcr.io/islemazz/sre-sentinel
     newTag: sha-82bba0b
+
 

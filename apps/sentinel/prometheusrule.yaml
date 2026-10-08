@@ -1,0 +1,31 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: sentinel-alerts
+  namespace: sre-sentinel
+spec:
+  groups:
+    - name: sre-sentinel
+      rules:
+        - alert: SentinelDown
+          expr: 'up{job="sre-sentinel/sentinel"} == 0'
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: SRE Sentinel is not answering its metrics endpoint
+        - alert: MemoryBreachPredicted
+          expr: 'sre_memory_breach_predicted == 1'
+          for: 30s
+          labels:
+            severity: warning
+          annotations:
+            summary: The forecaster predicts memory will reach its limit soon
+            description: See sre_memory_breach_eta_seconds for the predicted time to the limit.
+        - alert: IncidentOpen
+          expr: 'sre_open_incidents == 1'
+          for: 10s
+          labels:
+            severity: warning
+          annotations:
+            summary: The anomaly detector has an open incident
