@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - sentinel.yaml
+images:
+  - name: ghcr.io/islemazz/sre-sentinel
+    newTag: sha-84a050a
