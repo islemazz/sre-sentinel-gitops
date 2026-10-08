@@ -4,4 +4,4 @@ resources:
   - sentinel.yaml
 images:
   - name: ghcr.io/islemazz/sre-sentinel
-    newTag: sha-84a050a
+    newTag: sha-82bba0b
