@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: sentinel
+  namespace: sre-sentinel
+spec:
+  selector:
+    matchLabels:
+      app: sentinel
+  podMetricsEndpoints:
+    - portNumber: 8000
+      path: /metrics
+      interval: 15s
