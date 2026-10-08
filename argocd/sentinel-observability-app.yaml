@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sentinel-observability
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/islemazz/sre-sentinel-gitops.git
+    targetRevision: main
+    path: apps/sentinel-observability
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sre-sentinel
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
