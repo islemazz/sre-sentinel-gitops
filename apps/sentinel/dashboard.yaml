@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sentinel-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  sentinel.json: |
+    {
+      "title": "SRE Sentinel",
+      "uid": "sre-sentinel",
+      "schemaVersion": 39,
+      "refresh": "10s",
+      "time": {"from": "now-30m", "to": "now"},
+      "panels": [
+        {"id": 1, "type": "timeseries", "title": "CPU %", "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+         "datasource": {"type": "prometheus", "uid": "prometheus"},
+         "targets": [{"expr": "sre_cpu_percent", "refId": "A"}]},
+        {"id": 2, "type": "timeseries", "title": "Memory % (leak simulator)", "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+         "datasource": {"type": "prometheus", "uid": "prometheus"},
+         "targets": [{"expr": "sre_memory_percent", "refId": "A"}]},
+        {"id": 3, "type": "timeseries", "title": "Anomaly score", "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+         "datasource": {"type": "prometheus", "uid": "prometheus"},
+         "targets": [{"expr": "sre_anomaly_score", "refId": "A"}]},
+        {"id": 4, "type": "timeseries", "title": "Detected anomalies (per minute)", "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+         "datasource": {"type": "prometheus", "uid": "prometheus"},
+         "targets": [{"expr": "rate(sre_detected_anomalies_total[1m]) * 60", "refId": "A"}]},
+        {"id": 5, "type": "stat", "title": "Open incidents", "gridPos": {"x": 0, "y": 16, "w": 8, "h": 5},
+         "datasource": {"type": "prometheus", "uid": "prometheus"},
+         "targets": [{"expr": "sre_open_incidents", "refId": "A"}]},
+        {"id": 6, "type": "stat", "title": "Memory breach predicted (1 = yes)", "gridPos": {"x": 8, "y": 16, "w": 8, "h": 5},
+         "datasource": {"type": "prometheus", "uid": "prometheus"},
+         "targets": [{"expr": "sre_memory_breach_predicted", "refId": "A"}]},
+        {"id": 7, "type": "stat", "title": "Breach ETA (seconds)", "gridPos": {"x": 16, "y": 16, "w": 8, "h": 5},
+         "datasource": {"type": "prometheus", "uid": "prometheus"},
+         "targets": [{"expr": "sre_memory_breach_eta_seconds", "refId": "A"}]}
+      ]
+    }
