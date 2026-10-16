@@ -4,6 +4,6 @@ resources:
   - sentinel.yaml
 images:
   - name: ghcr.io/islemazz/sre-sentinel
-    newTag: sha-cb6b4b9
+    newTag: sha-5eed64a
 
 
